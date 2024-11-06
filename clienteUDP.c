@@ -33,21 +33,14 @@ int main(int argc, char *argv[]){
     int i;
     //Convertimos el nombre del archivo a mayúsculas
     for (i = 0; i < strlen(archivoIN); i++) {
-        //Bucle que convierte el nombre del archivo a mayúsculas, excepto al punto
         if (archivoIN[i] != '.') {
             archivoOUT[i] = toupper(archivoIN[i]);
-            printf("%c\n", archivoOUT[i]);
-        } 
-        //Copiamos el punto, sin usar la función toupper sobre él
-        else if (archivoIN[i] == '\0'){
-            break;
-        }
-        else{
+        } else {
             archivoOUT[i] = archivoIN[i];
-            printf("%c\n", archivoOUT[i]);
         }
     }
-    //archivoOUT[i] = '\0';
+    // Añadir '\0' al final para evitar caracteres indeseados
+    archivoOUT[i + 1] = '\0';
     //Creamos el archivo de salida y lo abre en modo escritura
     FILE *salida = fopen(archivoOUT, "w");
     if (salida == NULL) { //Verificamos si hubo un error al abrir o crear el archivo
