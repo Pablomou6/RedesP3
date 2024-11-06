@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <ctype.h>
 
+//!MOD
 #define ARRAY_SIZE 4
 
 int main(int argc, char *argv[]){
@@ -13,6 +14,7 @@ int main(int argc, char *argv[]){
     int socket_emisor; //Variable para el socket del emisor
     struct sockaddr_in dir_propia, dir_remota; //Variables que guardan una estructura en donde se guardan las direcciones y los puertos tanto propios como remotos
 
+    //!MOD
     float mensaje[ARRAY_SIZE] = {10.1, 4.3, 2.7, 1.6};//Creamos el array de floats que vamos a enviar
 
     int puerto_propio, puerto_dest; //Variables para guardar los puertos, tanto el propio como el de destino
@@ -49,7 +51,8 @@ int main(int argc, char *argv[]){
     }
 
     //Enviamos el mensaje al receptor con la funcion sendto() (usa UDP). En la funcion se pasas por parametro el socket del emisor, el mensaje que se quiere enviar el receptor, el tamaño del mensaje, el 0 es porque hacemos uso de flags, La estructura con la dirección del socket destino (dir_remota) y su tamaño sacado con sizeof()
-    //Usamos sizeof() en vez de strlen() para obtener el tamaño del array
+    //Usamos sizeof() en vez de strlen() para obtener el tamaño del array  
+                                        //!MOD (sizeof)
     int b = sendto(socket_emisor, mensaje, sizeof(mensaje), 0, (struct sockaddr*)&dir_remota, sizeof(dir_remota));
     if (b < 0) {
         printf("Error al enviar datos");
