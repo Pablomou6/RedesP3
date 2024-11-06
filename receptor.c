@@ -61,7 +61,8 @@ int main(int argc, char* argv[]) {
         printf("El mensaje es: %s\n", string);
 
         El resultado será que el receptor recibirá 2 bytes de mensaje y se quedará a la espera en la segunda llamada a recvfrom. Si volvemos a ejecutar el 
-        emisor, recibirá el mensaje entero, pero si no lo ejecutamos, no sucederá.
+        emisor, recibirá el mensaje entero, pero si no lo ejecutamos, no sucederá. Esto se debe a que UDP no es un protocolo que mantenga el estado del flujo
+        de datos, entonces los bytes sobrantes (que no caben e el buffer) se perderán.
      */
 
     tamanho = sizeof(direccionRemota);
