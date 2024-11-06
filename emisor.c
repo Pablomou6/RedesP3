@@ -10,14 +10,13 @@ int main(int argc, char *argv[]){
     struct sockaddr_in dir_propia, dir_remota; //Variables que guardan una estructura en donde se guardan las direcciones y los puertos tanto propios como remotos
     socklen_t dir_len; //Variable para guardar el tamaño de las variables que guarda una estructura sockaddr_in
 
-    char *mensaje = "Ahi va Iago Aspas a la carrera con Akapo."; //Variable en la que se guarda el mensaje que se quiere enviar
+    char *mensaje = "Ahi va Iago a la carrera con Akapo."; //Variable en la que se guarda el mensaje que se quiere enviar
 
-    int puerto_propio, puerto_dest;
-    puerto_propio = atoi(argv[1]);
-    puerto_dest = atoi(argv[3]);
+    int puerto_propio, puerto_dest; //Variables para guardar los puertos, tanto el propio como el de destino
+    puerto_propio = atoi(argv[1]); //Guardamos en puerto_propio el puerto que se pasa por parametro al ejecutar el codigo
+    puerto_dest = atoi(argv[3]); //Guardamos en puerto_dest el puerto que se pasa por parametro al ejecutar el codigo
 
-    char *ip = argv[2]; //Se guarda en una variable la ip del servidor, que se pasa por parámetro
-
+    char *ip = argv[2]; //Se guarda en una variable la ip del emisor, que se pasa por parámetro
 
     //Creación del socket del emisor, indicando que es de tipo IPv4 con AF_INET y que está orientado a la conexión con SOCK_STREAM
     if ((socket_emisor = socket(AF_INET, SOCK_DGRAM, 0)) == 0) {
@@ -58,6 +57,6 @@ int main(int argc, char *argv[]){
     printf("Mensaje enviado.\n");
     printf("Número de bytes enviados: %d\n", b);
 
-    //Por último cerramos el socket del emisor con la funcion close()
+    //Cerramos el socket del emisor con la funcion close()
     close(socket_emisor);
 }
