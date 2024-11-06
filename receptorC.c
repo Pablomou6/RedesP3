@@ -46,34 +46,30 @@ int main(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    /**
-     * 1.c)
-     * modificamos la función recvfrom actual y ponemos que reciba 2 bytes. Dejmos que imprima el mensaje que recibió y volveremos a llamar a la función.
-     * Tras las líneas de impresión del mensaje, pegamos otra llamada a recvfrom:
-     * tamMsg = recvfrom(Socket, string, 1023, 0, (struct sockaddr*) &direccionRemota, &tamanho);
-        if(tamMsg < 0) {
-            perror("Error al recibir el mensaje.\n");
-            exit(EXIT_FAILURE);
-        }
-        A continuación, volvemos a imprimir el mensaje:
-        printf("Se ha recibido un mensaje por el puerto %d. Enviado por %s.\n", ntohs(direccionRemota.sin_port), IP);
-        printf("Se han recibido %zd bytes.\n", tamMsg);
-        printf("El mensaje es: %s\n", string);
-
-        El resultado será que el receptor recibirá 2 bytes de mensaje y se quedará a la espera en la segunda llamada a recvfrom. Si volvemos a ejecutar el 
-        emisor, recibirá el mensaje entero, pero si no lo ejecutamos, no sucederá.
-     */
-
+    //Primera llamada a la funcón recvfrom, vamos a tomar solo n = 2 bytes
     tamanho = sizeof(direccionRemota);
-    ssize_t tamMsg = recvfrom(Socket, string, 1023, 0, (struct sockaddr*) &direccionRemota, &tamanho);
+    ssize_t tamMsg = recvfrom(Socket, string, 2, 0, (struct sockaddr*) &direccionRemota, &tamanho);
     if(tamMsg < 0) {
         perror("Error al recibir el mensaje.\n");
         exit(EXIT_FAILURE);
     }
-
     string[tamMsg] = '\0';
 
     char IP[INET_ADDRSTRLEN];
+    inet_ntop(AF_INET, &(direccionRemota.sin_addr), IP, INET_ADDRSTRLEN);
+    printf("Se ha recibido un mensaje por el puerto %d. Enviado por %s.\n", ntohs(direccionRemota.sin_port), IP);
+    printf("Se han recibido %zd bytes.\n", tamMsg);
+    printf("El mensaje es: %s\n", string);
+
+    //Segunda llamada a la función recvfrom, tomaremos el resto de bytes que tiene disponibles el string
+    tamanho = sizeof(direccionRemota);
+    tamMsg = recvfrom(Socket, string, 1021, 0, (struct sockaddr*) &direccionRemota, &tamanho);
+    if(tamMsg < 0) {
+        perror("Error al recibir el mensaje.\n");
+        exit(EXIT_FAILURE);
+    }
+    string[tamMsg] = '\0';
+
     inet_ntop(AF_INET, &(direccionRemota.sin_addr), IP, INET_ADDRSTRLEN);
     printf("Se ha recibido un mensaje por el puerto %d. Enviado por %s.\n", ntohs(direccionRemota.sin_port), IP);
     printf("Se han recibido %zd bytes.\n", tamMsg);

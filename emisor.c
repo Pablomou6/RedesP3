@@ -6,8 +6,6 @@
 #include <ctype.h>
 
 int main(int argc, char *argv[]){
-
-
     int socket_emisor; //Variable para el socket del emisor
     struct sockaddr_in dir_propia, dir_remota; //Variables que guardan una estructura en donde se guardan las direcciones y los puertos tanto propios como remotos
     socklen_t dir_len; //Variable para guardar el tamaño de las variables que guarda una estructura sockaddr_in
@@ -48,8 +46,9 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
+    dir_len = sizeof(dir_remota);
     //Enviamos el mensaje al receptor con la funcion sendto() (usa UDP). En la funcion se pasas por parametro el socket del emisor, el mensaje que se quiere enviar el receptor, el tamaño del mensaje, el 0 es porque hacemos uso de flags, La estructura con la dirección del socket destino (dir_remota) y su tamaño sacado con sizeof()
-    int b = sendto(socket_emisor, mensaje, strlen(mensaje), 0, (struct sockaddr*)&dir_remota, sizeof(dir_remota));
+    int b = sendto(socket_emisor, mensaje, strlen(mensaje), 0, (struct sockaddr*)&dir_remota, dir_len);
     if (b < 0) {
         printf("Error al enviar datos");
         exit(EXIT_FAILURE);
