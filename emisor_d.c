@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
 
     //Enviamos el mensaje al receptor con la funcion sendto() (usa UDP). En la funcion se pasas por parametro el socket del emisor, el mensaje que se quiere enviar el receptor, el tamaño del mensaje, el 0 es porque hacemos uso de flags, La estructura con la dirección del socket destino (dir_remota) y su tamaño sacado con sizeof()
     //Usamos sizeof() en vez de strlen() para obtener el tamaño del array  
-                                        //!MOD (sizeof)
+                                        //!MOD (strlen)
     int b = sendto(socket_emisor, mensaje, sizeof(mensaje), 0, (struct sockaddr*)&dir_remota, sizeof(dir_remota));
     if (b < 0) {
         printf("Error al enviar datos");

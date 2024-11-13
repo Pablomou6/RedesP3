@@ -8,15 +8,13 @@
 #include<unistd.h>
 
 
-//!MOD
-#define ARRAY_SIZE 4
 
 int main(int argc, char* argv[]) {
     int Socket;
     struct sockaddr_in direccionPropia, direccionRemota;
     socklen_t tamanho;
     //!MOD
-    float array[ARRAY_SIZE]; 
+    float array[1024]; 
 
     //Creamos el socket del receptor
     /**
@@ -65,7 +63,8 @@ int main(int argc, char* argv[]) {
     //printf("Se han recibido %zd bytes.\n", tamMsg);
     //printf("El mensaje es: %s\n", string);
     //!MOD
-    for (int i = 0; i < ARRAY_SIZE; i++) {
+    int tamArray = tamMsg/sizeof(float);
+    for (int i = 0; i < tamArray; i++) {
         printf("Elemento %d: %.2f\n", i, array[i]);
     }
 }
